@@ -6,8 +6,7 @@
 }
 .todo__main {
     padding: 1.2rem 1rem 1.3rem;
-    //background: #232b3e;
-    background: #31394c38;
+    background: var(--color-primary-transparent);
     border-radius: var(--border-radius-box);
     @media #{$smartphone} {
         padding: 1.7rem 1.5rem 2rem;

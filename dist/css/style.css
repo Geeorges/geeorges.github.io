@@ -1,12 +1,15 @@
 :root {
-  --color-primary: #282f41;
-  --color-primary-light: #3b4661;
+  /*named color values*/
+  --color-primary: lch(4.91% 4.24 264.57);
+  --color-primary-light: lch(24.33% 17.46 273.95);
+  --color-primary-transparent: lch(23.85% 12.89 272.55 / 22%);
   --color-danger: #DD6769;
-  --color-border-basic: #556183;
-  --color-border-focus: #aac2ff;
+  --color-border-basic: lch(55% 20.79 275.33);
+  --color-border-focus: lch(85% 33.15 273.83);
   --primary-font: "Ubuntu", sans-serif;
   --border-radius-input: 60px;
   --border-radius-box: 0px;
+  /*abstractions*/
 }
 
 html,
@@ -25,7 +28,6 @@ body {
 body {
   margin: 0;
   background: var(--color-primary);
-  background: #0d1117;
   color: #fff;
 }
 
@@ -115,7 +117,7 @@ body {
 
 .todo__main {
   padding: 1.2rem 1rem 1.3rem;
-  background: rgba(49, 57, 76, 0.2196078431);
+  background: var(--color-primary-transparent);
   border-radius: var(--border-radius-box);
 }
 @media only screen and (min-width:600px) {
@@ -212,8 +214,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 1.2rem;
-  background: rgba(45, 54, 78, 0.561);
-  background: rgba(45, 54, 78, 0.18);
+  background: lch(23% 16.19 275/18%);
   border-radius: var(--border-radius-box);
   padding: 1rem;
   align-items: center;
@@ -405,27 +406,25 @@ body {
   position: relative;
 }
 
-[data-title]::after {
-  content: attr(data-title);
-  visibility: hidden;
-  background-color: #505a73;
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-  position: absolute;
-  opacity: 0;
-  transition: opacity 0.3s;
-  white-space: nowrap;
-  z-index: 1;
-  padding: 3px 7px;
-  bottom: 120%;
-  left: auto;
-  right: 0;
-  font-size: 0.7rem;
-  text-indent: 0;
-}
 @media only screen and (min-width:1024px) {
   [data-title]::after {
+    content: attr(data-title);
+    visibility: hidden;
+    background-color: #505a73;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    z-index: 1;
+    padding: 3px 7px;
+    bottom: 120%;
+    left: auto;
+    right: 0;
+    font-size: 0.7rem;
+    text-indent: 0;
     padding: 5px 10px;
     bottom: 125%;
     left: 50%;

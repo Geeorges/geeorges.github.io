@@ -1,14 +1,18 @@
-$color-primary: #282f41;
-$color-primary-light: lighten($color-primary, 10%);
 :root {
-    --color-primary: #{$color-primary};
-    --color-primary-light: #{$color-primary-light};
+    /*named color values*/
+    --color-primary: lch(4.91% 4.24 264.57);
+    --color-primary-light: lch(24.33% 17.46 273.95);
+    --color-primary-transparent: lch(23.85% 12.89 272.55 / 22%);
     --color-danger: #DD6769;
-    --color-border-basic: #556183;
-    --color-border-focus: #aac2ff;
+    --color-border-basic: lch(55% 20.79 275.33);
+    --color-border-focus: lch(85% 33.15 273.83);
     --primary-font: "Ubuntu", sans-serif;
     --border-radius-input: 60px;
     --border-radius-box: 0px;
+
+    /*abstractions*/
+
 }
+
 $tablet: "only screen and (min-width:1024px)";
 $smartphone: "only screen and (min-width:600px)";

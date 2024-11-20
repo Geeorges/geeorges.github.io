@@ -1,6 +1,5 @@
 @mixin box-main {
-    background: rgba(45, 54, 78, 0.561);
-    background: rgba(45, 54, 78, 0.18);
+    background: lch(23% 16.19 275 / 18%);
     border-radius: var(--border-radius-box);
     padding: 1rem;
     @media #{$tablet} {
