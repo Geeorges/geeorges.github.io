@@ -170,10 +170,18 @@ function createDoneItem(doneItem) {
 }
 
 // Sort items
-const sortableList = document.getElementById('todoList');
 
-Sortable.create(sortableList, {
-    animation: 150,
-    easing: "cubic-bezier(0.7, 0, 0.3, 1)",
-    ghostClass: "ghost" // Class applied to the placeholder position
-});
+
+const desktopQuery = window.matchMedia('(any-hover: hover)');
+
+if (desktopQuery.matches) {
+    const sortableList = document.getElementById('todoList');
+
+    Sortable.create(sortableList, {
+        animation: 150,
+        easing: "cubic-bezier(0.7, 0, 0.3, 1)",
+        ghostClass: "ghost" // Class applied to the placeholder position
+    });
+    
+}
+
