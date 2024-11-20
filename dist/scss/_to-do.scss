@@ -5,10 +5,13 @@
     }
 }
 .todo__main {
-    padding: 1.7rem 1.5rem 2rem;
-    background: #232b3e;
+    padding: 1.2rem 1rem 1.3rem;
+    //background: #232b3e;
     background: #31394c38;
     border-radius: var(--border-radius-box);
+    @media #{$smartphone} {
+        padding: 1.7rem 1.5rem 2rem;
+    }
     @media #{$tablet} {
         padding: 3rem;
     }
@@ -16,7 +19,10 @@
 .todo__form {
     display: grid;
     grid-template-columns: 1fr 64px;
-    grid-gap: 1.5rem;
+    grid-gap: 1rem;
+    @media #{$tablet} {
+        grid-gap: 1.5rem;
+    }
     .cta__add {
         width: 64px;
         height: 64px;
@@ -79,20 +85,25 @@
     .input__wrapper {
         position: relative;
         display: grid;
-        grid-template-columns: 44px 1fr 90px;
+        grid-template-columns: 1fr 1fr;
         grid-gap: 1.2rem;
         @include box-main;
         align-items: center;
-        padding: 1rem 1.4rem;
-        height: 90px;
         max-width: 100%;
         -webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
         animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        padding: 1rem 1.1rem;
+        height: auto;
         &.editing--active {
             grid-template-columns: 1fr 90px;
             .check__cta {
                 display: none;
             }
+        }
+        @media #{$smartphone} {
+            padding: 1rem 1.4rem;
+            height: 90px;
+            grid-template-columns: 44px 1fr 90px;
         }
         @media #{$tablet} {
             grid-gap: 1.8rem;
@@ -102,9 +113,17 @@
             box-shadow: none;
             border-bottom: 2px solid var(--color-border-basic);
             padding: 0 0 0.3rem 0.5rem;
+            order: -1;
+            height: 45px;
+            grid-column: 1 / -1;
             &[readonly] {
                 border-bottom: 2px solid var(--color-border-basic);
                 cursor: auto;
+            }
+            @media #{$smartphone} {
+                grid-column: auto;
+                order: initial;
+                height: auto;
             }
             @media #{$tablet} {
                 padding: 0 0 0.5rem 0.5rem;

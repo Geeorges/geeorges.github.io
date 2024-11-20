@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script defer src="./js/functions.js"></script>
-    <script defer src="./js/storage.js"></script>
+    <script defer src="./js/localStorage.js"></script>
     <script defer src="./js/script.js"></script>
 </head>
 
@@ -37,7 +37,7 @@
     <section class="body__wrapper layout__container">
         <section class="todo__main">
             <form id="todoForm" action="" method="post" class="todo__form">
-                <input id="todo-input" type="text" name="todo-input" class="todo__input" placeholder="What to-do... what to-do..." required>
+                <input id="todo-input" type="text" name="todo-input" class="todo__input" placeholder="Add new task" required>
                 <button id="todoAdd" class="cta__add" data-title="Add new task" type="submit">Add</button>
             </form>
             <form id="todoList" action="" method="post" class="todo__box todo__box--todo flex flex--column"></form>

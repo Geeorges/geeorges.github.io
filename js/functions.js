@@ -33,8 +33,8 @@ function completeListItem() {
 
                 // Perform actions for a completed item
                 createDoneItem(content); // Move item to Done list
-                storeDoneItems(content); // Store item into "Done" localStorage
-                deleteTodoItem(content); // Remove item from "To-do" localStorage
+                storeDoneLocalStorageItems(content); // Store item into "Done" local storage
+                deleteFromLocalStorage(content); // Remove item from "To-do" local storage
 
                 wrapper.remove();
                 checkIfEmpty();
@@ -55,7 +55,7 @@ function removeListItem() {
 
             let content = wrapper.getAttribute("data-content");
 
-            deleteTodoItem(content); // Remove item from LocalStorage
+            deleteFromLocalStorage(content); // Remove item from LocalStorage
 
             wrapper.remove();
             checkIfEmpty();
@@ -92,7 +92,7 @@ function editListItem() {
                 // Update the value and data attribute
                 input.title = input.value;
                 let content = wrapper.getAttribute("data-content");
-                updateEditedItem(content, input.value);
+                updateEditedLocalStorageItem(content, input.value); //local storage function
                 wrapper.setAttribute("data-content", input.value);
 
                 // Edit button state

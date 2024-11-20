@@ -11,7 +11,7 @@ function storeTodoItems(value) {
 }
 
 // store done items
-function storeDoneItems(value) {
+function storeDoneLocalStorageItems(value) {
     // Push the new item into the array
     itemsDone.push(value);
     // Save the updated array back to localStorage
@@ -19,7 +19,7 @@ function storeDoneItems(value) {
 }
 
 //
-function updateEditedItem(editedItem, newItem){
+function updateEditedLocalStorageItem(editedItem, newItem){
     const itemsTodo = JSON.parse(localStorage.getItem("items-todo")) || [];
 
     const index = itemsTodo.indexOf(editedItem);
@@ -36,7 +36,7 @@ function updateEditedItem(editedItem, newItem){
 }
 
 // Remove to-do item from localStorage
-function deleteTodoItem(itemToDelete) {
+function deleteFromLocalStorage(itemToDelete) {
     // Retrieve existing items from localStorage or initialize an empty array
     let itemsTodo = localStorage.getItem("items-todo") ? JSON.parse(localStorage.getItem("items-todo")) : [];
     // Filter out the item to delete
@@ -46,7 +46,7 @@ function deleteTodoItem(itemToDelete) {
 }
 
 // Load items from localStorage
-function loadItems(){
+function loadLocalStorageItems(){
    // Retrieve items from localStorage or initialize as empty arrays
    const itemsTodo = JSON.parse(localStorage.getItem("items-todo")) || [];
    const itemsDone = JSON.parse(localStorage.getItem("items-done")) || [];
@@ -66,7 +66,7 @@ function loadItems(){
 
     checkIfEmpty();
 }
-loadItems();
+loadLocalStorageItems();
 
 
 // Reset to-do, done list, localStorage
