@@ -33,8 +33,8 @@ function completeListItem() {
 
                 // Perform actions for a completed item
                 createDoneItem(content); // Move item to Done list
-                storeDoneLocalStorageItems(content); // Store item into "Done" local storage
-                deleteFromLocalStorage(content); // Remove item from "To-do" local storage
+                //storeDoneLocalStorageItems(content); // Store item into "Done" local storage
+                //deleteFromLocalStorage(content); // Remove item from "To-do" local storage
 
                 wrapper.remove();
                 checkIfEmpty();
@@ -44,7 +44,7 @@ function completeListItem() {
 }
 
 // Remove to-do list item 
-function removeListItem() {
+/* function removeListItem() {
     let inputWrapper = document.querySelectorAll(".input__wrapper")
     
     inputWrapper.forEach(wrapper => {
@@ -54,14 +54,15 @@ function removeListItem() {
             event.preventDefault();
 
             let content = wrapper.getAttribute("data-content");
+            deleteElement(content);
 
-            deleteFromLocalStorage(content); // Remove item from LocalStorage
+            //deleteFromLocalStorage(content); // Remove item from LocalStorage
 
             wrapper.remove();
             checkIfEmpty();
         });
     });
-}
+} */
 
 // Edit to-do list item
 function editListItem() {
@@ -92,7 +93,7 @@ function editListItem() {
                 // Update the value and data attribute
                 input.title = input.value;
                 let content = wrapper.getAttribute("data-content");
-                updateEditedLocalStorageItem(content, input.value); //local storage function
+                //updateEditedLocalStorageItem(content, input.value); //local storage function
                 wrapper.setAttribute("data-content", input.value);
 
                 // Edit button state
@@ -125,7 +126,7 @@ function editListItem() {
 }
 
 // Create new to-do item
-function createListItem(newItem) {
+function createListItem(taskName, taskID) {
     // Helper function to create elements with attributes
     function createElement(tag, classes = [], attributes = {}) {
         let element = document.createElement(tag);
@@ -145,11 +146,11 @@ function createListItem(newItem) {
         type: "text",
         name: "list-item",
         readOnly: true,
-        value: newItem,
-        title: newItem,
+        value: taskName,
+        title: taskName,
     });
 
-    let newInputWrapper = createElement("div", ["input__wrapper"], { "data-content": newItem });
+    let newInputWrapper = createElement("div", ["input__wrapper"], { "data-content": taskID });
 
     // append everyting together
     newInputWrapper.append(newCheck, newInput, newEditWrapper);

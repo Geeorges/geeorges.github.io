@@ -1,7 +1,11 @@
+
 const todoForm = document.getElementById("todoForm");
 const todoList = document.getElementById("todoList");
 const ctaAdd = document.getElementById("todoAdd");
 const doneList = document.getElementById("doneList");
+
+
+
 
 // Add new to-do item
 todoForm.addEventListener('submit', function (event) {
@@ -21,10 +25,12 @@ todoForm.addEventListener('submit', function (event) {
     
         // Save data
         createListItem(todoText);
-        storeTodoItems(todoText);
-        editListItem();
-        removeListItem();
-        completeListItem();
+        //storeTodoItems(todoText); // local storage
+        //editListItem();
+        //removeListItem();
+        //completeListItem();
+
+
     
         // Reset form
         event.target.reset();
