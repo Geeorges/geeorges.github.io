@@ -366,7 +366,7 @@ body {
   cursor: pointer;
 }
 .todo__box--todo .edit__wrapper .delete__cta:hover {
-  background-color: #db5d5f;
+  background-color: #c45658;
 }
 .todo__box--todo .edit__wrapper .delete__cta:hover::before {
   transform: scale(0.85);
@@ -513,4 +513,13 @@ form button[type=submit]:hover {
 }
 #ctaReset:hover svg {
   transform: rotate(-90deg);
+}
+
+.login__popup {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: none;
 }/*# sourceMappingURL=style.css.map */

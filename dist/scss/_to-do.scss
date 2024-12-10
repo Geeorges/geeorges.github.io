@@ -1,6 +1,6 @@
 .body__wrapper {
     padding: 0.7rem 1rem 2rem;
-    @media #{$tablet} {
+    @media only screen and (min-width:1024px) {
         padding: 1.3rem 0 3rem;
     }
 }
@@ -8,10 +8,10 @@
     padding: 1.2rem 1rem 1.3rem;
     background: var(--color-primary-transparent);
     border-radius: var(--border-radius-box);
-    @media #{$smartphone} {
+    @media only screen and (min-width:600px) {
         padding: 1.7rem 1.5rem 2rem;
     }
-    @media #{$tablet} {
+    @media only screen and (min-width:1024px) {
         padding: 3rem;
     }
 }
@@ -19,9 +19,6 @@
     display: grid;
     grid-template-columns: 1fr 64px;
     grid-gap: 1rem;
-    @media #{$tablet} {
-        grid-gap: 1.5rem;
-    }
     .cta__add {
         width: 64px;
         height: 64px;
@@ -45,15 +42,16 @@
             mask-image: url(../images/add.svg);
         }
     }
+    @media only screen and (min-width:1024px) {
+        grid-gap: 1.5rem;
+    }
 }
 .todo__box {
     display: none;
     position: relative;
     margin-top: 3.7rem;
     margin-bottom: 1rem;
-    @media #{$tablet} {
-        margin-top: 4.5rem;
-    }
+
     &.active {
         display: flex;
         opacity: 1;
@@ -70,9 +68,12 @@
         font-weight: 700;
         line-height: 1;
         margin: -1rem 0 0;
-        @media #{$tablet} {
+        @media only screen and (min-width:1024px) {
             font-size: 40px;
         }
+    }
+    @media only screen and (min-width:1024px) {
+        margin-top: 4.5rem;
     }
 }
 // To-do
@@ -86,10 +87,9 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 1.2rem;
-        @include box-main;
+        //@include box-main;
         align-items: center;
         max-width: 100%;
-        -webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
         animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
         padding: 1rem 1.1rem;
         height: auto;
@@ -99,14 +99,7 @@
                 display: none;
             }
         }
-        @media #{$smartphone} {
-            padding: 1rem 1.4rem;
-            height: 90px;
-            grid-template-columns: 44px 1fr 90px;
-        }
-        @media #{$tablet} {
-            grid-gap: 1.8rem;
-        }
+       
         input {
             border-radius: 0;
             box-shadow: none;
@@ -119,12 +112,12 @@
                 border-bottom: 2px solid var(--color-border-basic);
                 cursor: auto;
             }
-            @media #{$smartphone} {
+            @media only screen and (min-width:600px) {
                 grid-column: auto;
                 order: initial;
                 height: auto;
             }
-            @media #{$tablet} {
+            @media only screen and (min-width:1024px) {
                 padding: 0 0 0.5rem 0.5rem;
             }
         }
@@ -134,11 +127,11 @@
         }
         .check__cta {
             border-radius: 50%;
-            @include border-basic;
+            //@include border-basic;
             width: 42px;
             height: 42px;
             cursor: pointer;
-            @include transition;
+            //@include transition;
             position: relative;
             &.disable {
                 display: none;
@@ -159,7 +152,7 @@
                 transition: inherit;
                 mask-image: url(../images/done.svg);
                 opacity: 0;
-                @include transition;
+                //@include transition;
                 transform: scale(0.5);
             }
             &:hover {
@@ -170,6 +163,14 @@
                     transform: scale(1);
                 }
             }
+        }
+        @media only screen and (min-width:600px) {
+            padding: 1rem 1.4rem;
+            height: 90px;
+            grid-template-columns: 44px 1fr 90px;
+        }
+        @media only screen and (min-width:1024px) {
+            grid-gap: 1.8rem;
         }
     }
     .edit__wrapper {
@@ -183,7 +184,7 @@
             height: 35px;
             border-radius: 0;
             position: relative;
-            @include transition;
+            //@include transition;
             &::before {
                 content: '';
                 display: block;
@@ -215,7 +216,7 @@
         .delete__cta {
             cursor: pointer;
             &:hover {
-                background-color: darken(#DD6769, 2.5);
+                background-color: #c45658;
                 &::before {
                     transform: scale(0.85);
                 }

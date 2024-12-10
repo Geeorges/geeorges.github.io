@@ -11,9 +11,6 @@ form {
         @include transition;
         width: 100%;
         padding: 0.9rem 1.1rem;
-        @media #{$tablet} {
-            padding: 1rem 1.5rem;
-        }
         &::placeholder {
             color: var(--color-primary-light);
         }
@@ -22,6 +19,9 @@ form {
             &::placeholder {
                 color: transparent;
             }
+        }
+        @media only screen and (min-width:1024px) {
+            padding: 1rem 1.5rem;
         }
     }
     button[type="submit"] {

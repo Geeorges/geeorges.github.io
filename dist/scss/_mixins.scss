@@ -1,8 +1,9 @@
+
 @mixin box-main {
     background: lch(23% 16.19 275 / 18%);
     border-radius: var(--border-radius-box);
     padding: 1rem;
-    @media #{$tablet} {
+    @media only screen and (min-width:1024px) {
         padding: 1.2rem 1.4rem;
     }
 }

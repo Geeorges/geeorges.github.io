@@ -2,8 +2,8 @@
 [data-title] {
     position: relative;
 }
-[data-title]::after {
-    @media #{$tablet} {
+@media only screen and (min-width:1024px) {
+    [data-title]::after {
         content: attr(data-title);
         visibility: hidden;
         background-color: #505a73;

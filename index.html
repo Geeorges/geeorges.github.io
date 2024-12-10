@@ -11,18 +11,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=fallback" rel="stylesheet">
     <link rel="shortcut icon" href="./dist/images/fav.jpg" type="image/x-icon">
 
-    <link rel="stylesheet" href="./dist/css/style.css">
+    <!-- <link rel="stylesheet" href="dist/css/style.css"> -->
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     
-    <script type="module" defer src="./js/database.js"></script>
     <script defer src="./js/script.js"></script>
     <script defer src="./js/functions.js"></script>
-
-
+    <script type="module" defer src="./js/database.js"></script>
+    <script type="module" defer src="./js/login.js"></script>
 
 </head>
+
+<section class="login__popup">
+    <div class="layout__container">
+        <form action="" method="get">
+            <label class="label_customer-name">
+                <span>Name</span>
+                <input type="text" name="username" id="loginUser">
+            </label>
+            <label class="label_customer-email">
+                <span>E-mail</span>
+                <input type="email" name="email" id="loginEmail">
+            </label>
+            <label class="label_customer-name">
+                <span>Password</span>
+                <input type="password" name="password" id="loginPass">
+            </label>
+        </form>
+    </div>
+</section>
 
 <header class="layout__container">
     <section class="header__inner flex flex--end grid--gap-large">
@@ -41,13 +59,17 @@
     <section class="body__wrapper layout__container">
         <section class="todo__main">
             <form id="todoForm" action="" method="post" class="todo__form">
-                <input id="todo-input" type="text" name="todo-input" class="todo__input" placeholder="Add new task" required autocomplete="off">
+                <input id="newTask" type="text" name="newTask" class="todo__input" placeholder="Add new task" required autocomplete="off">
                 <button id="todoAdd" class="cta__add" data-title="Add new task" type="submit">Add</button>
             </form>
             <form id="todoList" action="" method="post" class="todo__box todo__box--todo flex flex--column"></form>
             <div id="doneList" class="todo__box todo__box--done flex flex--column"></div>
         </section>
     </section>
+
+    
+    <script type="module" src="./js/main.js"></script>
 </body>
+
 
 </html>

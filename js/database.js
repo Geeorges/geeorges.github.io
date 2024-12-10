@@ -186,7 +186,7 @@ function removeListItem() {
 // Add new to-do item
 todoForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    let input = document.getElementById("todo-input");
+    let input = document.getElementById("newTask");
 
     if ((input.value).trim() === ""){
         event.target.reset();
@@ -197,7 +197,7 @@ todoForm.addEventListener('submit', function (event) {
         // Get data from input
         let formData = new FormData(event.target);
         let data = Object.fromEntries(formData.entries());
-        let todoText = data['todo-input'].trim();
+        let todoText = data['newTask'].trim();
     
         // Save data
         addDocuments(todoText);

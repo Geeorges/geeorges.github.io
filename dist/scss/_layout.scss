@@ -1,10 +1,10 @@
 .layout__container {
     padding-left: 1rem;
     padding-right: 1rem;
-    @media #{$tablet} {
+    @media only screen and (min-width:1024px) {
         padding-left: 0;
         padding-right: 0;
-        @include layout-1024;
+        //@include layout-1024;
     }
 }
 .flex {
@@ -18,12 +18,12 @@
     }
 }
 .grid__col--2 {
-    @media #{$tablet} {
+    @media only screen and (min-width:1024px) {
         grid-template-columns: 1fr 1fr;
     }
 }
 .grid__col--3 {
-    @media #{$tablet} {
+    @media only screen and (min-width:1024px) {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
