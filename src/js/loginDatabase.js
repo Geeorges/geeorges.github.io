@@ -1,4 +1,4 @@
-import { Client, Account, Users, ID } from "appwrite";
+import { Client, Account, ID} from "appwrite";
 
 
 // Delete session
@@ -199,41 +199,49 @@ logIn.addEventListener('submit', function (event) {
 
 
 
-
-
 async function getUserLabel() {
     const client = new Client()
         .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
         .setProject('673e5814003a6ffce52d'); // Your project ID
     
     const account = new Account(client);
-    const users = new Users(client); // Create an instance of the Users API
-    
+
     try {
-        // Fetch the user information
+        // Fetch user info
         const user = await account.get();
         console.log("User Label:", user.labels);  // Logs current labels
         console.log("User preferences:", user.prefs); // Logs current preferences
 
-        // Fetch user preferences
-        let prefs = await account.getPrefs();
-        console.log("User Preferences:", prefs);
-
-        // Check if the user has labels and if the label is not already in the array
+        // Add "basic" label if it's not already present
         if (user.labels && !user.labels.includes("basic")) {
-            // Add "basic" label if it's not already present
             const updatedLabels = [...user.labels, "basic"];
             
-            // Use the Users API to update the user labels
-            const result = await users.update(user.$id, { labels: updatedLabels });
+            // Update the user labels (using the correct method)
+            const result = await account.updatePrefs({ labels: updatedLabels });
             console.log("Label updated successfully:", result);
         } else {
             console.log("Label 'basic' is already present.");
         }
-
     } catch (error) {
         console.error("Error fetching user label:", error);
     }
 }
 
-getUserLabel();
+getUserLabel(); 
+
+
+/* 
+
+const client = new Client()
+    .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
+    .setProject('673e5814003a6ffce52d'); // Your project ID
+
+const account = new Account(client);
+
+// Example of creating a new identity (e.g., for Google authentication)
+const result = await account.createIdentity(
+    'google', // The provider (e.g., 'google', 'facebook', etc.)
+    'your_provider_api_key_or_secret' // The API key or secret for the provider (if needed)
+);
+
+console.log(result); */
