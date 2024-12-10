@@ -12,11 +12,8 @@ function checkIfEmpty(){
 }
 
 
-
-
-
 // Create new to-do item
-function createListItem(taskName, taskID) {
+async function createListItem(taskName, taskID) {
     // Helper function to create elements with attributes
     function createElement(tag, classes = [], attributes = {}) {
         let element = document.createElement(tag);
@@ -62,19 +59,16 @@ function createDoneItem(doneItem) {
 
 
 
-// Sort items
-
-
-const desktopQuery = window.matchMedia('(any-hover: hover)');
-
-if (desktopQuery.matches) {
-    const sortableList = document.getElementById('todoList');
-
-    Sortable.create(sortableList, {
-        animation: 150,
-        easing: "cubic-bezier(0.7, 0, 0.3, 1)",
-        ghostClass: "ghost" // Class applied to the placeholder position
-    });
-    
+function loginError(){
+    alert("You dont have rights to do this, please log in :-)");
 }
+
+function loginCheck(){
+    let session = document.querySelector("body.session-active");
+    if(session){
+        return true;
+    }
+}
+
+
 

@@ -8,5 +8,5 @@ const doneList = document.getElementById("doneList");
 
 // Prevent to-do form from submiting
 todoList.addEventListener('submit', function (event) {
-    event.preventDefault();
+    event.preventDefault();    
 });

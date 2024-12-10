@@ -1,3 +1,6 @@
+@use '../scss/variables' as *;  // Imports variables
+@use '../scss/mixins' as *;     // Imports mixins
+
 form {
     textarea,
     input {
@@ -15,7 +18,7 @@ form {
             color: var(--color-primary-light);
         }
         &:focus {
-            @include border-focus;
+            @include border-focus();
             &::placeholder {
                 color: transparent;
             }

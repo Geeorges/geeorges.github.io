@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Query } from 'appwrite';
+import { Client, Databases, ID, Messaging, Query } from 'appwrite';
 
 
 // INITIALIZE DB
@@ -12,6 +12,7 @@ const databases = new Databases(client);
 
 //
 // FUNCTIONS
+
 
 async function fetchTodoDocuments() {
     try {
@@ -62,32 +63,42 @@ async function fetchDoneDocuments() {
 
 async function addDocuments(inputText) {
     try {
-        // Generate unique ID using ID.unique() for the document
-        const documentId = ID.unique();
-
-        // Create a new document in the specified collection
-        const promise = databases.createDocument(
-            '673e5848002973075c76', // databaseId
-            '673e5a6200247fcdc7b5', // collectionId
-            documentId, // Unique document ID
-            {
-                Task: inputText // Document fields (you can add more fields here)
+        const session = await loginCheck(); // Await inside async callback
+        if (session) {
+            try {
+                // Generate unique ID using ID.unique() for the document
+                const documentId = ID.unique();
+        
+                // Create a new document in the specified collection
+                const promise = databases.createDocument(
+                    '673e5848002973075c76', // databaseId
+                    '673e5a6200247fcdc7b5', // collectionId
+                    documentId, // Unique document ID
+                    {
+                        Task: inputText // Document fields (you can add more fields here)
+                    }
+                );
+        
+                promise.then(function (response) {
+                    console.log('Document created successfully:', response);
+                    createListItem(response.Task, response.$id);
+                    removeListItem();
+                    completeListItem();
+                    editListItem();
+        
+                }, function (error) {
+                    console.error('Error creating document:', error);
+                });
+        
+            } catch (error) {
+                console.error("Error in addDocuments function:", error);
             }
-        );
+        } else {
+           loginError();
+        }
+    }
+    catch (error){
 
-        promise.then(function (response) {
-            console.log('Document created successfully:', response);
-            createListItem(response.Task, response.$id);
-            removeListItem();
-            completeListItem();
-            editListItem();
-
-        }, function (error) {
-            console.error('Error creating document:', error);
-        });
-
-    } catch (error) {
-        console.error("Error in addDocuments function:", error);
     }
 }
 
@@ -121,7 +132,7 @@ async function markAsDone(contentId) {
 
 async function editTask(contentId, contentValue) {
     try {
-
+      
         // Create a new document in the specified collection
         const promise = databases.updateDocument(
             '673e5848002973075c76', // databaseId
@@ -131,14 +142,14 @@ async function editTask(contentId, contentValue) {
                 Task: contentValue
             }
         );
-
+        
         promise.then(function (response) {
             console.log('Document created successfully:', response);
-
+            
         }, function (error) {
             console.error('Error in editing element:', error);
         });
-
+    
     } catch (error) {
         console.error("Error in editing function:", error);
     }
@@ -167,20 +178,25 @@ function removeListItem() {
     let inputWrapper = document.querySelectorAll(".input__wrapper")
     
     inputWrapper.forEach(wrapper => {
-        let ctaDelete = wrapper.querySelector(".delete__cta");
-        
-        ctaDelete.addEventListener('click', function (event) {
-            event.preventDefault();
+            let ctaDelete = wrapper.querySelector(".delete__cta");
             
-            let contentId = wrapper.getAttribute("data-content");
-            deleteElement(contentId);
+            ctaDelete.addEventListener('click', function (event) {
+                event.preventDefault();
+                
+                let session = document.querySelector("body.session-active");
+                if(session){
+                    let contentId = wrapper.getAttribute("data-content");
+                    deleteElement(contentId);
+                    
+                    //deleteFromLocalStorage(content); // Remove item from LocalStorage
             
-            //deleteFromLocalStorage(content); // Remove item from LocalStorage
-    
-            wrapper.remove();
-            checkIfEmpty();
+                    wrapper.remove();
+                    checkIfEmpty();
+                } else {
+                    loginError();
+                }
+            });
         });
-    });
 }
 
 // Add new to-do item
@@ -212,9 +228,8 @@ todoForm.addEventListener('submit', function (event) {
 
 
 
-
 // Complete list item
-function completeListItem() {
+async function completeListItem() {
     document.querySelectorAll(".input__wrapper").forEach(wrapper => {
         // Clone and replace the check CTA to reset event listeners
         let ctaCheck = wrapper.querySelector(".check__cta");
@@ -222,26 +237,31 @@ function completeListItem() {
         ctaCheck = wrapper.querySelector(".check__cta");
 
         // Add click event listener to the check CTA
-        ctaCheck.addEventListener('click', event => {
+        ctaCheck.addEventListener('click', async event => { // Make the callback async
             event.preventDefault();
-            let input = wrapper.querySelector("input");         
+            let input = wrapper.querySelector("input");
             let content = wrapper.getAttribute("data-content").trim();
-            
-            if (content === ""){ // Done item must have content
-                input.setAttribute("requiery", "true");
-                alert(" \"Does doing nothing really count as doing something?\" :--) ");
-            } else{ 
-                input.setAttribute("requiery", "false");
 
-                // Perform actions for a completed item
-                //createDoneItem(content); // Move item to Done list
+            try {
+                const session = await loginCheck(); // Await inside async callback
+                if (session) {
+                    if (content === "") { // Done item must have content
+                        input.setAttribute("requiery", "true");
+                        alert(" \"Does doing nothing really count as doing something?\" :--) ");
+                    } else {
+                        input.setAttribute("requiery", "false");
 
-                let contentId = wrapper.getAttribute("data-content");
-                markAsDone(contentId);
+                        let contentId = wrapper.getAttribute("data-content");
+                        markAsDone(contentId);
 
-
-                wrapper.remove();
-                checkIfEmpty();
+                        wrapper.remove();
+                        checkIfEmpty();
+                    }
+                } else {
+                    loginError();
+                }
+            } catch (error) {
+                console.error("Error during session check:", error);
             }
         });
     });
@@ -251,8 +271,9 @@ function completeListItem() {
 
 
 
+
 // Edit to-do list item
-function editListItem() {
+async function editListItem() {
     const inputWrappers = document.querySelectorAll(".input__wrapper");
 
     inputWrappers.forEach(wrapper => {
@@ -304,10 +325,19 @@ function editListItem() {
         input.addEventListener("keydown", handleEnterKey);
 
         // Attach the click event listener to the button
-        ctaEdit.addEventListener('click', function (event) {
+        ctaEdit.addEventListener('click', async event => {
             event.preventDefault();
-            toggleEditMode();
-            ctaEdit = wrapper.querySelector(".edit__cta");
+            try {
+                const session = await loginCheck(); // Await inside async callback
+                if (session) {
+                    toggleEditMode();
+                    ctaEdit = wrapper.querySelector(".edit__cta");
+                } else {
+                    loginError();
+                }
+            } catch (error) {
+                console.error("Error during session check:", error);
+            }
         });
     });
 }

@@ -1,12 +1,17 @@
-.header__inner {
+@use '../scss/mixins' as *;     // Imports mixins
+
+header{
     padding: 1.9rem 0 0;
     @media only screen and (min-width:1024px) {
         padding: 3rem 0 0;
     }
 }
+
+.header__inner {
+}
 #ctaReset {
     svg {
-        //@include transition;
+        @include transition;
     }
     &:hover {
         svg {
