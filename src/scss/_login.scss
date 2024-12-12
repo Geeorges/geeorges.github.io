@@ -1,3 +1,5 @@
+@use '../scss/mixins' as *;     // Imports mixins
+
 .auth__popup{
     position: fixed;
     left: 0;
@@ -7,21 +9,79 @@
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.98);
+    background: var(--color-popup-bg);
     z-index: 100;
     display: none;
     form{
         display: flex;
         flex-direction: column;
-        grid-gap: 1.2rem;
+        grid-gap: 1rem;
+        padding: 2rem;
+        background: var(--color-primary);
+        button{
+            align-self: flex-start;
+            padding: 0.8rem 2rem; 
+            border-radius: 40px;
+            font-size: 1rem;   
+            margin-top: 1rem; 
+        }
+        input{
+            padding: 0.7rem 1rem;
+            border-radius: 0;
+        }
     }
     &.active{
         display: flex;
     }
 }
 
+.auth__inner{
+    grid-template-columns: 1fr 320px;
+    margin-top: 1.3rem;
+}
 
-.header__user{
+.icon-close{
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background: #0d1117;
+    text-indent: -2000em;
+    @include transition;
+    &:hover {
+        background-color: #c45658;
+        &::before {
+            transform: scale(0.85);
+        }
+    }
+    &::before {
+        content: '';
+        mask-image: url(../images/delete.svg);
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: 2rem;
+        background-color: #fff;
+        transition: inherit;
+    }
+}
+
+
+.form__after{
+    background: #1b2632;
+    padding: 2rem 1.75rem;
+    color: #fff;
+    h2{
+        margin: 0 0 1rem;
+    }
     a{
-        color: #fff;
+        color: inherit;
     }
 }

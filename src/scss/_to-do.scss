@@ -40,7 +40,7 @@
             mask-repeat: no-repeat;
             mask-position: center;
             mask-size: 21px;
-            background-color: #fff;
+            background-color: var(--color-text);
             mask-image: url(../images/add.svg);
         }
     }
@@ -109,6 +109,7 @@
             order: -1;
             height: 45px;
             grid-column: 1 / -1;
+            color: var(--color-text);
             &[readonly] {
                 border-bottom: 2px solid var(--color-border-basic);
                 cursor: auto;
@@ -158,7 +159,7 @@
             }
             &:hover {
                 background: #556183;
-                box-shadow: inset 0 0 0 2px #3d4764;
+                box-shadow: inset 0 0 0 2px #48567d;
                 &::before {
                     opacity: 1;
                     transform: scale(1);
@@ -186,6 +187,7 @@
             border-radius: 0;
             position: relative;
             @include transition;
+           
             &::before {
                 content: '';
                 display: block;
@@ -197,14 +199,16 @@
                 mask-repeat: no-repeat;
                 mask-position: center;
                 mask-size: contain;
-                background-color: #fff;
+                background-color: var(--color-text);
                 transition: inherit;
             }
         }
         .edit__cta {
-            background-color: #7390D8;
-            background-color: rgba(235, 241, 255, 0.071);
+            background-color: rgb(51 61 80 / 83%);
             cursor: pointer;
+            &::before{
+                background-color: #fff;
+            }
             &.edit__cta--active,
             &:hover {
                 background: #414a61;
@@ -220,6 +224,7 @@
                 background-color: #c45658;
                 &::before {
                     transform: scale(0.85);
+                    background-color: #000;
                 }
             }
             &::before {
@@ -239,6 +244,8 @@
         margin: 0;
         position: relative;
         padding-left: 2rem;
+        align-self: flex-start;
+        color: var(--color-text);
         &::before {
             content: '';
             display: block;

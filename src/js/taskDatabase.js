@@ -27,8 +27,9 @@ async function fetchTodoDocuments() {
         // 
         results.documents.forEach(result => {
             let taskName = result.Task;
-            let taskID = result.$id;
-            createListItem(taskName, taskID);
+            let taskId = result.$id;
+            let taskUpdated = result.$updatedAt;
+            createListItem(taskName, taskId, taskUpdated);
         });
         removeListItem();
         completeListItem();
@@ -51,7 +52,9 @@ async function fetchDoneDocuments() {
 
         results.documents.forEach(result => {
             let taskName = result.Task;
-            createDoneItem(taskName);
+            let taskId = result.$id;
+            let taskUpdated = result.$updatedAt;
+            createDoneItem(taskName, taskId, taskUpdated);
         });
 
         checkIfEmpty();
@@ -117,7 +120,7 @@ async function markAsDone(contentId) {
 
         promise.then(function (response) {
             console.log('Document created successfully:', response);
-            createDoneItem(response.Task, response.$id);
+            createDoneItem(response.Task, response.$id, response.$updatedAt);
             checkIfEmpty();
             removeListItem();
 
@@ -178,25 +181,25 @@ function removeListItem() {
     let inputWrapper = document.querySelectorAll(".input__wrapper")
     
     inputWrapper.forEach(wrapper => {
-            let ctaDelete = wrapper.querySelector(".delete__cta");
+        let ctaDelete = wrapper.querySelector(".delete__cta");
+        
+        ctaDelete.addEventListener('click', function (event) {
+            event.preventDefault();
             
-            ctaDelete.addEventListener('click', function (event) {
-                event.preventDefault();
+            let session = document.querySelector("body.session-active");
+            if(session){
+                let contentId = wrapper.getAttribute("data-content");
+                deleteElement(contentId);
                 
-                let session = document.querySelector("body.session-active");
-                if(session){
-                    let contentId = wrapper.getAttribute("data-content");
-                    deleteElement(contentId);
-                    
-                    //deleteFromLocalStorage(content); // Remove item from LocalStorage
-            
-                    wrapper.remove();
-                    checkIfEmpty();
-                } else {
-                    loginError();
-                }
-            });
+                //deleteFromLocalStorage(content); // Remove item from LocalStorage
+        
+                wrapper.remove();
+                checkIfEmpty();
+            } else {
+                loginError();
+            }
         });
+    });
 }
 
 // Add new to-do item

@@ -1,7 +1,6 @@
 // Show .todo__box if not empty
 function checkIfEmpty(){
     let todoBox = document.querySelectorAll(".todo__box");
-
     todoBox.forEach(box => {
         if (box.children.length > 0) {
             box.classList.add("active");
@@ -10,7 +9,6 @@ function checkIfEmpty(){
         }
     });
 }
-
 
 // Create new to-do item
 async function createListItem(taskName, taskID) {
@@ -21,14 +19,11 @@ async function createListItem(taskName, taskID) {
         Object.keys(attributes).forEach(attr => element.setAttribute(attr, attributes[attr]));
         return element;
     }
-
     // Create elements using the helper function
     let newCheck = createElement("a", ["check__cta"], { "data-title": "Done" });
     let newEditCta = createElement("a", ["edit__cta"], { "data-title": "Edit" });
     let newDeleteCta = createElement("a", ["delete__cta"], { "data-title": "Delete" });
-
     let newEditWrapper = createElement("div", ["edit__wrapper"]);
-
     let newInput = createElement("input", [], {
         type: "text",
         name: "list-item",
@@ -36,28 +31,23 @@ async function createListItem(taskName, taskID) {
         value: taskName,
         title: taskName,
     });
-
     let newInputWrapper = createElement("div", ["input__wrapper"], { "data-content": taskID });
-
     // append everyting together
     newInputWrapper.append(newCheck, newInput, newEditWrapper);
     newEditWrapper.append(newEditCta, newDeleteCta);
     todoList.prepend(newInputWrapper);
-
     checkIfEmpty();
 }
 
 // Create new done item
-function createDoneItem(doneItem) {
-    // save content into new item
+function createDoneItem(doneItem, itemId, itemDate) {
+    let date = new Date(itemDate);
+    const readableDate = `Fineshed at ${date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' })} at ${date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })}`;
     let itemDone = document.createElement("p");
+    itemDone.setAttribute("data-title", readableDate)
     itemDone.textContent = doneItem;
-    
-    // append new item into done-list
-    doneList.prepend(itemDone);
+    doneList.prepend(itemDone); // append new item into done-list
 }
-
-
 
 function loginError(){
     alert("You dont have rights to do this, please log in :-)");
@@ -69,6 +59,3 @@ function loginCheck(){
         return true;
     }
 }
-
-
-

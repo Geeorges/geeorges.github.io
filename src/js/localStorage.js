@@ -1,92 +1,76 @@
-/*  local storage */
-let itemsTodo = localStorage.getItem("items-todo") ? JSON.parse(localStorage.getItem("items-todo")) : [];
-let itemsDone = localStorage.getItem("items-done") ? JSON.parse(localStorage.getItem("items-done")) : [];
+import { themeColors } from './colors';
 
-// store to-do items
-function storeTodoItems(value) {
-    // Push the new item into the array
-    itemsTodo.push(value);
-    // Optionally, save the updated array back to localStorage
-    localStorage.setItem("items-todo", JSON.stringify(itemsTodo));
+// Initialize variables
+let html = document.querySelector("html");
+let root = document.documentElement;
+let light = "theme-light";
+let dark = "theme-dark";
+let theme = localStorage.getItem("Theme") ? JSON.parse(localStorage.getItem("Theme")) : [];
+
+// Check if theme is empty or doesn't exist, and set it to light theme by default
+if (theme.length === 0) {
+    theme.push(light);  // Add the "theme-light" to the array
+    localStorage.setItem("Theme", JSON.stringify(theme));  // Save the updated theme in localStorage
+    html.classList.add(light);  // Apply the light theme to the HTML element
+    applyThemeColors('light');  // Apply light theme styling
+} else {
+    // Apply themes from localStorage if already set
+    theme.forEach(t => {
+        html.classList.add(t);  // Add the theme class to the HTML element
+        if (t === light) applyThemeColors('light');
+        if (t === dark) applyThemeColors('dark');
+    });
 }
 
-// store done items
-function storeDoneLocalStorageItems(value) {
-    // Push the new item into the array
-    itemsDone.push(value);
-    // Save the updated array back to localStorage
-    localStorage.setItem("items-done", JSON.stringify(itemsDone));
+// Toggle theme when user clicks the button
+let ctaThemeChange = document.querySelector("#themeChange");
+ctaThemeChange.addEventListener('click', function (event) {
+    event.preventDefault();
+    changeTheme();
+});
+
+// Apply the appropriate theme colors
+function applyThemeColors(theme) {
+    const colors = themeColors[theme];
+
+    root.style.setProperty('--color-primary', colors.primary);
+    root.style.setProperty('--color-text', colors.text);
+    root.style.setProperty('--color-border-basic', colors.borderBasic);
+    root.style.setProperty('--color-border-focus', colors.borderFocus);
+    root.style.setProperty('--color-primary-transparent', colors.primaryTransparent);
+    root.style.setProperty('--color-popup-bg', colors.popupBg);
+
+    
 }
 
-//
-function updateEditedLocalStorageItem(editedItem, newItem){
-    const itemsTodo = JSON.parse(localStorage.getItem("items-todo")) || [];
 
-    const index = itemsTodo.indexOf(editedItem);
-    if (index !== -1) {
-        // Replace the old item with the new item
-        itemsTodo[index] = newItem;
-        // Save the updated array back to localStorage
-        localStorage.setItem("items-todo", JSON.stringify(itemsTodo));
-        // Log the updated item
-        //console.log("Updated item: " + editedItem + " to " + newItem);
+// Handle theme change
+
+let themeChange = document.querySelector("#themeChange");
+
+function changeTheme() {
+    if (theme.includes(light)) {
+        // Switch to dark theme
+        theme = theme.filter(item => item !== light);
+        theme.push(dark);
+        localStorage.setItem("Theme", JSON.stringify(theme));  // Save the updated theme in localStorage
+
+        html.classList.remove(light);
+        html.classList.add(dark);
+        applyThemeColors('dark');  // Apply dark theme colors
+
+        themeChange.setAttribute("data-title", "Light theme")
+        
     } else {
-        console.log("Item not found: " + editedItem);
+        // Switch to light theme
+        theme = theme.filter(item => item !== dark);
+        theme.push(light);
+        localStorage.setItem("Theme", JSON.stringify(theme));  // Save the updated theme in localStorage
+        
+        html.classList.remove(dark);
+        html.classList.add(light);
+        applyThemeColors('light');  // Apply light theme colors
+        
+        themeChange.setAttribute("data-title", "Dark theme")
     }
 }
-
-// Remove to-do item from localStorage
-function deleteFromLocalStorage(itemToDelete) {
-    // Retrieve existing items from localStorage or initialize an empty array
-    let itemsTodo = localStorage.getItem("items-todo") ? JSON.parse(localStorage.getItem("items-todo")) : [];
-    // Filter out the item to delete
-    itemsTodo = itemsTodo.filter(item => item.trim() !== itemToDelete);
-    // Save the updated array back to localStorage
-    localStorage.setItem("items-todo", JSON.stringify(itemsTodo));
-}
-
-// Load items from localStorage
-function loadLocalStorageItems(){
-   // Retrieve items from localStorage or initialize as empty arrays
-   const itemsTodo = JSON.parse(localStorage.getItem("items-todo")) || [];
-   const itemsDone = JSON.parse(localStorage.getItem("items-done")) || [];
-
-    itemsTodo.forEach(item => {
-        createListItem(item);
-    });
-    
-    itemsDone.forEach(item => {
-        createDoneItem(item);
-    });
-
-    // Add event listeners once after loading items
-    editListItem();
-    removeListItem();
-    completeListItem();
-
-    checkIfEmpty();
-}
-loadLocalStorageItems();
-
-
-// Reset to-do, done list, localStorage
-let ctaReset = document.querySelector("#ctaReset");
-
-ctaReset.addEventListener('click', function (event) {
-    event.preventDefault();
-    localStorage.clear();
-
-    let todoItems = document.querySelectorAll(".input__wrapper");
-
-    todoItems.forEach(item => {
-        item.remove();
-    });
-
-    let doneItems = document.querySelectorAll(".todo__box--done p");
-
-    doneItems.forEach(item => {
-        item.remove();
-    });
-    
-    checkIfEmpty();
-});

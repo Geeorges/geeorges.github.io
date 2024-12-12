@@ -2,13 +2,16 @@
 @use '../scss/mixins' as *;     // Imports mixins
 
 form {
+    input:is(:-webkit-autofill, :autofill) {
+        background: transparent;
+      }
     textarea,
     input {
         border: none;
         background: transparent;
         @include border-basic;
         outline: none;
-        color: #fff;
+        color: var(--color-text);
         font-size: 20px;
         border-radius: var(--border-radius-input);
         @include transition;
@@ -30,10 +33,13 @@ form {
     button[type="submit"] {
         box-shadow: none;
         background: transparent;
-        color: #fff;
+        color: var(--color-text);
         border: none;
         @include border-basic;
         @include transition;
+        &::after{
+            display: none;
+        }
         &:hover {
             @include border-focus;
         }

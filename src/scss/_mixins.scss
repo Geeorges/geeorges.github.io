@@ -1,6 +1,6 @@
 // box-main mixin
 @mixin box-main {
-    background: lch(23% 16.19 275 / 18%);
+    background: lch(50.67 15.89 272.97 / 0.08);
     border-radius: var(--border-radius-box);
     padding: 1rem;
     
@@ -15,8 +15,8 @@
 }
 
 // border-focus mixin (fixed the $color variable usage)
-@mixin border-focus($color: var(--color-border-focus)) {
-    box-shadow: inset 0 0 0 2px var(--#{$color});
+@mixin border-focus {
+    box-shadow: inset 0 0 0 2px var(--color-border-focus);
 }
 
 // transition mixin

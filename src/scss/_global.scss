@@ -26,7 +26,7 @@
         left: 50%;
         right: auto;
         transform: translateX(-50%);
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 }
 [data-title]:hover::after {
@@ -57,4 +57,18 @@
         transform: scale(1);
         opacity: 1;
     }
+}
+
+
+
+
+canvas{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
+    position: fixed;
 }
