@@ -1,29 +1,36 @@
 @use '../scss/mixins' as *;     // Imports mixins
 
-.auth__popup{
+.auth-popup{
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    align-items: center;
+    align-items: flex-start;
+    padding-top: 5.6rem;
+    padding-bottom: 3rem;
     justify-content: center;
     background: rgba(0, 0, 0, 0.98);
     background: var(--color-popup-bg);
     z-index: 100;
+    overflow: scroll;
     display: none;
     form{
         display: flex;
         flex-direction: column;
+        text-align: center;
         grid-gap: 1rem;
         padding: 2rem;
         background: var(--color-primary);
+        h3{
+            font-size: 1.8rem;
+            margin: 0.7rem 0 1rem;
+        }
         button{
-            align-self: flex-start;
+            align-self: center;
             padding: 0.8rem 2rem; 
-            border-radius: 40px;
-            font-size: 1rem;   
-            margin-top: 1rem; 
+            margin-top: 0.5rem; 
+            cursor: pointer;
         }
         input{
             padding: 0.7rem 1rem;
@@ -36,11 +43,12 @@
 }
 
 .auth__inner{
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: 50% 50%;
     margin-top: 1.3rem;
+    box-shadow: 0 0 42px -10px rgb(0 0 0 / 23%);
 }
 
-.icon-close{
+.auth__close{
     position: relative;
     cursor: pointer;
     display: inline-flex;
@@ -74,14 +82,64 @@
 }
 
 
-.form__after{
-    background: #1b2632;
-    padding: 2rem 1.75rem;
+.auth__after{
+    background: #1e2c3d;
+    padding: 2rem 1.75rem 3rem;
     color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     h2{
         margin: 0 0 1rem;
+        font-size: 39px;
     }
     a{
         color: inherit;
     }
+    p{
+        margin-bottom: 1rem;
+    }
+}
+
+
+
+.header__user{
+    position: relative;
+}
+
+.header__user--options{
+    position: absolute;
+    left: 2.3rem;
+    top: 2.65rem;
+    background: var(--color-primary);
+    padding: 1.6rem 1.6rem 1.6rem;
+    box-shadow: inset 0 0 0 2px;
+    display: none;
+    ul{
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        &,
+        li{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        li{
+            a{
+                text-decoration: none;
+                &:has(svg){
+                    display: flex;
+                    align-items: center;
+                    gap: 0.6rem;
+                }
+            }
+        }
+    }
+}
+
+
+.content__settings{
+    display: none;
 }

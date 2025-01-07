@@ -178,25 +178,27 @@ async function deleteElement(iDToDelete){
 }
 
 function removeListItem() {
-    let inputWrapper = document.querySelectorAll(".input__wrapper")
+    let inputWrapper = document.querySelectorAll(".task-todo")
     
     inputWrapper.forEach(wrapper => {
-        let ctaDelete = wrapper.querySelector(".delete__cta");
+        let ctaDelete = wrapper.querySelector(".task-todo__delete");
         
-        ctaDelete.addEventListener('click', function (event) {
+        ctaDelete.addEventListener('click', async event => {
             event.preventDefault();
-            
-            let session = document.querySelector("body.session-active");
-            if(session){
-                let contentId = wrapper.getAttribute("data-content");
-                deleteElement(contentId);
-                
-                //deleteFromLocalStorage(content); // Remove item from LocalStorage
-        
-                wrapper.remove();
-                checkIfEmpty();
-            } else {
-                loginError();
+
+            try {
+                const session = await loginCheck(); // Await inside async callback
+                if (session) {
+                    let contentId = wrapper.getAttribute("data-content");
+                    deleteElement(contentId);
+                    
+                    wrapper.remove();
+                    checkIfEmpty();
+                } else {
+                    loginError();
+                }
+            } catch (error) {
+                console.error("Error during session check:", error);
             }
         });
     });
@@ -233,11 +235,11 @@ todoForm.addEventListener('submit', function (event) {
 
 // Complete list item
 async function completeListItem() {
-    document.querySelectorAll(".input__wrapper").forEach(wrapper => {
+    document.querySelectorAll(".task-todo").forEach(wrapper => {
         // Clone and replace the check CTA to reset event listeners
-        let ctaCheck = wrapper.querySelector(".check__cta");
+        let ctaCheck = wrapper.querySelector(".task-todo__check");
         ctaCheck.replaceWith(ctaCheck.cloneNode(true));
-        ctaCheck = wrapper.querySelector(".check__cta");
+        ctaCheck = wrapper.querySelector(".task-todo__check");
 
         // Add click event listener to the check CTA
         ctaCheck.addEventListener('click', async event => { // Make the callback async
@@ -277,13 +279,13 @@ async function completeListItem() {
 
 // Edit to-do list item
 async function editListItem() {
-    const inputWrappers = document.querySelectorAll(".input__wrapper");
+    const inputWrappers = document.querySelectorAll(".task-todo");
 
     inputWrappers.forEach(wrapper => {
-        let ctaEdit = wrapper.querySelector(".edit__cta");
+        let ctaEdit = wrapper.querySelector(".task-todo__edit");
         // Clone the button to avoid listener duplication
         ctaEdit.replaceWith(ctaEdit.cloneNode(true));
-        ctaEdit = wrapper.querySelector(".edit__cta");
+        ctaEdit = wrapper.querySelector(".task-todo__edit");
 
         let input = wrapper.querySelector("input");
 
@@ -296,7 +298,7 @@ async function editListItem() {
                 input.focus();
                 input.setSelectionRange(input.value.length, input.value.length);
                 // Edit button state
-                ctaEdit.classList.add("edit__cta--active");
+                ctaEdit.classList.add("task-todo__edit--active");
                 ctaEdit.setAttribute("data-title", "OK");
                 wrapper.classList.add("editing--active");
                 
@@ -308,7 +310,7 @@ async function editListItem() {
                 editTask(contentId, input.title)
 
                 // Edit button state
-                ctaEdit.classList.remove("edit__cta--active");
+                ctaEdit.classList.remove("task-todo__edit--active");
                 ctaEdit.setAttribute("data-title", "Edit");
                 wrapper.classList.remove("editing--active");
             }
@@ -317,9 +319,9 @@ async function editListItem() {
         // Save edited value by hitting enter
         function handleEnterKey(event) {
             if (!input.readOnly && event.key === "Enter") {
-                ctaEdit = wrapper.querySelector(".edit__cta");
+                ctaEdit = wrapper.querySelector("task-todo__edit");
                 toggleEditMode();
-                ctaEdit.classList.remove("edit__cta--active");
+                ctaEdit.classList.remove("task-todo__edit--active");
                 ctaEdit.setAttribute("data-title", "Edit");
             }
         }
@@ -334,7 +336,7 @@ async function editListItem() {
                 const session = await loginCheck(); // Await inside async callback
                 if (session) {
                     toggleEditMode();
-                    ctaEdit = wrapper.querySelector(".edit__cta");
+                    ctaEdit = wrapper.querySelector(".task-todo__edit");
                 } else {
                     loginError();
                 }

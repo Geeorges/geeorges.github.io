@@ -49,7 +49,7 @@ var colorText = "#fff";
 // show name of loged-in user
 // toggle .active on login + sign-in popup 
 // hide sign-in button when session is active
-async function showClient(colorText){
+async function showClient(){
     const clientData = await getClient();
 
     if (clientData) {
@@ -57,7 +57,7 @@ async function showClient(colorText){
         console.log(email, name);
 
         // Get the userName element
-        let userName = document.querySelector(".userLogin");
+        let userName = document.querySelector(".userSignIn");
 
         // Update the user name and email with the SVG and colorText
         userName.innerHTML = 
@@ -65,7 +65,7 @@ async function showClient(colorText){
         + email;
 
         // Remove sign-in button if client is logged in
-        let signIn = document.querySelector(".userSignIn");
+        let signIn = document.querySelector(".userSignUp");
         signIn.remove();
 
         // Add session-active class to the body
@@ -73,7 +73,7 @@ async function showClient(colorText){
         body.classList.add("session-active");
 
         // Handle login/logout interaction
-        let showLoginPopupCta = document.querySelector(".userLogin");
+        let showLoginPopupCta = document.querySelector(".userSignIn");
 
         showLoginPopupCta.addEventListener('click', function (event) {
             event.preventDefault();
@@ -87,7 +87,7 @@ async function showClient(colorText){
         });
     } else{
         // Show login and sign-in popups if client is not logged in
-        let showLoginPopupCta = document.querySelectorAll(".userLogin, #loginPopupClose");
+        let showLoginPopupCta = document.querySelectorAll(".userSignIn, #loginPopupClose");
         showLoginPopupCta.forEach(function(loginPopupCta) {
             loginPopupCta.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -99,7 +99,7 @@ async function showClient(colorText){
             });
         });
         
-        let showSignPopupCta = document.querySelectorAll(".userSignIn, #signInPopupClose");
+        let showSignPopupCta = document.querySelectorAll(".userSignUp, #signInPopupClose");
         showSignPopupCta.forEach(function(SignPopupCta) {
             SignPopupCta.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -139,19 +139,45 @@ async function createNewUser(newEmail, newPass, newUser) {
         
     } catch (error){
         console.error('Error creating new user:', error);
+
+      // Example: Custom error message handling
+        if (error.message.includes("Password too short")) {
+            shortPassword(); // Call your function for handling short passwords
+        } else if (error.message.includes("Password too simple")) {
+            simplePassword(); // Call your function for handling simple passwords
+        } else {
+            console.error("An unexpected error occurred.");
+        }
+
+        if (error.response?.status === 429) {
+            const retryAfter = error.response.headers['retry-after'] || 1; // Default retry time
+            console.warn(`Rate limit hit. Retrying after ${retryAfter} seconds...`);
+            await sleep(retryAfter * 1000); // Convert seconds to milliseconds
+            return createNewUser(newEmail, newPass, newUser); // Retry the request
+        }
     }
 }
 
-// Send sign-in form and push data into createNewUser()
+// Send sign-up form and push data into createNewUser()
 let signIn = document.querySelector("#signInPopup");
 signIn.addEventListener('submit', function (event) {
     event.preventDefault();
 
     let formData = new FormData(event.target);
     let data = Object.fromEntries(formData.entries());
-    let newUser = data['username'].trim();
-    let newPass = data['password'].trim();
-    let newEmail = data['email'].trim();
+
+    // Log the data for debugging
+    console.log(data);
+
+    // Safely retrieve values and validate
+    let newUser = data['new-username'] ? data['new-username'].trim() : '';
+    let newPass = data['new-password'] ? data['new-password'].trim() : '';
+    let newEmail = data['new-email'] ? data['new-email'].trim() : '';
+
+    if (!newUser || !newPass || !newEmail) {
+        console.error('All fields are required');
+        return;
+    }
 
     createNewUser(newEmail, newPass, newUser);
 });
@@ -205,27 +231,35 @@ async function getUserLabel() {
     const client = new Client()
         .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
         .setProject('673e5814003a6ffce52d'); // Your project ID
+
     const account = new Account(client);
+
     try {
         // Fetch user info
         const user = await account.get();
-        console.log("User Label:", user.labels);  // Logs current labels
-        console.log("User preferences:", user.prefs); // Logs current preferences
-        // Add "basic" label if it's not already present
-        if (user.labels && !user.labels.includes("basic")) {
-            const updatedLabels = [...user.labels, "basic"];
-            // Update the user labels (using the correct method)
+        console.log("User Labels:", user.prefs.labels || []); // Logs current labels
+        console.log("User Preferences:", user.prefs);         // Logs current preferences
+
+        // Ensure labels exist and check for "basic"
+        const currentLabels = user.prefs.labels || [];
+        if (!currentLabels.includes("basic")) {
+            // Add "basic" label
+            const updatedLabels = [...currentLabels, "basic"];
+            
+            // Update user preferences with new labels
             const result = await account.updatePrefs({ labels: updatedLabels });
-            console.log("Label updated successfully:", result);
+            console.log("Labels updated successfully:", result.prefs.labels);
         } else {
             console.log("Label 'basic' is already present.");
         }
     } catch (error) {
-        console.error("Error fetching user label:", error);
+        console.error("Error managing user labels:", error.message || error);
     }
 }
 
 getUserLabel(); 
+
+
 
 
 /* 

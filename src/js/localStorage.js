@@ -34,13 +34,13 @@ function applyThemeColors(theme) {
     const colors = themeColors[theme];
 
     root.style.setProperty('--color-primary', colors.primary);
+    root.style.setProperty('--color-primary-opacity', colors.primary);
     root.style.setProperty('--color-text', colors.text);
+    root.style.setProperty('--color-text-opacity', colors.textOpacity);
     root.style.setProperty('--color-border-basic', colors.borderBasic);
     root.style.setProperty('--color-border-focus', colors.borderFocus);
     root.style.setProperty('--color-primary-transparent', colors.primaryTransparent);
     root.style.setProperty('--color-popup-bg', colors.popupBg);
-
-    
 }
 
 

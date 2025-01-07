@@ -1,6 +1,6 @@
 @use '../scss/mixins' as *;     // Imports mixins
 
-.layout__container {
+.layout-container {
     padding-left: 1rem;
     padding-right: 1rem;
     @media only screen and (min-width:1024px) {

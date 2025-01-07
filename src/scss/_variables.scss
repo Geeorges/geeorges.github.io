@@ -1,16 +1,22 @@
 :root {
-    /*named color values*/
+    //changed with dark/light theme
     --color-primary: lch(4.91% 4.24 264.57);
-    --color-primary-light: lch(24.33% 17.46 273.95);
-    --color-primary-transparent: lch(23.85% 12.89 272.55 / 22%);
-    --color-danger: #DD6769;
-    --color-border-basic: lch(55% 20.79 275.33);
+    --color-border-basic: oklch(0.66 0.06 270.88 / 0.65);
     --color-border-focus: lch(85% 33.15 273.83);
+    --color-popup-bg: rgba(0, 0, 0, 0.98);
+    --color-text: rgb(255, 255, 255);
+    --color-primary-transparent: lch(23.85% 12.89 272.55 / 22%);
+    --color-primary-opacity: lch(24.33% 17.46 273.95);
+    
+    
+    --color-danger: #DD6769;
     --primary-font: "Ubuntu", sans-serif;
     --border-radius-input: 60px;
     --border-radius-box: 0px;
-    --color-popup-bg: rgba(0, 0, 0, 0.98);
-    --color-text: rgb(255, 255, 255);
 
     /*abstractions*/
+}
+
+.theme-light{
+    
 }
