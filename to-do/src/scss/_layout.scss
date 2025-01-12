@@ -1,0 +1,46 @@
+@use '../scss/mixins' as *;     // Imports mixins
+
+.layout-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    @media only screen and (min-width:1024px) {
+        padding-left: 0;
+        padding-right: 0;
+        @include layout-1024;
+    }
+}
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    &--end {
+        justify-content: flex-end;
+    }
+    &--between{
+        justify-content: space-between;
+    }
+    &--column {
+        flex-direction: column;
+    }
+}
+.grid__col--2 {
+    @media only screen and (min-width:1024px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+.grid__col--3 {
+    @media only screen and (min-width:1024px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+.grid {
+    display: grid;
+    &--gap-small {
+        grid-gap: 8px;
+    }
+    &--gap-medium {
+        grid-gap: 16px;
+    }
+    &--gap-large {
+        grid-gap: 24px;
+    }
+}

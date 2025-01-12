@@ -1,0 +1,68 @@
+@use '../scss/variables' as *;  // Imports variables
+@use '../scss/mixins' as *;     // Imports mixins
+
+form {
+    input:is(:-webkit-autofill, :autofill) {
+        background: transparent;
+    }
+    label{
+        &>span:nth-of-type(1){
+            margin-bottom: 0.2rem;
+            display: none;
+        }
+    }
+    textarea,
+    input {
+        border: none;
+        background: transparent;
+        @include border-basic;
+        outline: none;
+        color: var(--color-text-opacity);
+        font-size: 20px;
+        border-radius: var(--border-radius-input);
+        @include transition;
+        width: 100%;
+        padding: 0.9rem 1.1rem;
+        &::placeholder {
+            color: var(--color-text-opacity);
+        }
+        &:focus {
+            @include border-focus();
+            &::placeholder {
+                color: transparent;
+            }
+        }
+        @media only screen and (min-width:1024px) {
+            padding: 1rem 1.5rem;
+        }
+    }
+    button[type="submit"] {
+        box-shadow: none;
+        background: transparent;
+        color: var(--color-text);
+        border: none;
+        @include border-basic;
+        @include transition;
+        &::after{
+            display: none;
+        }
+        &:hover {
+            @include border-focus;
+            background: var(--color-text);
+            color: var(--color-primary);
+        }
+    }
+}
+
+a,
+a:visited{
+    text-decoration: underline;
+    &:hover{
+        text-decoration: none;
+    }
+}
+
+button{
+    border-radius: 40px;
+    font-size: 1rem;
+}

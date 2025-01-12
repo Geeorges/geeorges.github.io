@@ -1,0 +1,297 @@
+@use '../scss/_mixins.scss' as *;
+
+
+/*------------------------------------*\
+  #WRAPPERS
+\*------------------------------------*/
+
+.content {
+    padding: 0.7rem 1rem 2rem;
+    @media only screen and (min-width:1024px) {
+        padding: 1.3rem 0 3rem;
+    }
+}
+.content__todo-list {
+    padding: 1.2rem 1rem 1.3rem;
+    background: var(--color-primary-transparent);
+    border-radius: var(--border-radius-box);
+    @media only screen and (min-width:600px) {
+        padding: 1.7rem 1.5rem 2rem;
+    }
+    @media only screen and (min-width:1024px) {
+        padding: 3rem;
+    }
+}
+
+
+/*------------------------------------*\
+  #NEW TASK
+\*------------------------------------*/
+
+.new-task{
+    display: grid;
+    grid-template-columns: 1fr 64px;
+    grid-gap: 1rem;
+    .new-task__add {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        font-size: 0;
+        text-indent: -9999px;
+        position: relative;
+        cursor: pointer;
+        &:hover{
+            &::before{
+                background-color: var(--color-primary);
+            }
+        }
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: 21px;
+            background-color: var(--color-text);
+            mask-image: url(../images/add.svg);
+            transition: inherit;
+        }
+    }
+    @media only screen and (min-width:1024px) {
+        grid-gap: 1.5rem;
+    }
+}
+
+
+.task-list {
+    display: none;
+    position: relative;
+    margin-top: 3.7rem;
+    margin-bottom: 1rem;
+
+    &.active {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+    }
+    &::before {
+        display: block;
+        position: relative;
+        left: 0;
+        top: 0;
+        font-size: 33px;
+        color: #2f3a54;
+        opacity: 1;
+        font-weight: 700;
+        line-height: 1;
+        margin: -1rem 0 0;
+        @media only screen and (min-width:1024px) {
+            font-size: 40px;
+        }
+    }
+    @media only screen and (min-width:1024px) {
+        margin-top: 4.5rem;
+    }
+}
+
+
+/*------------------------------------*\
+  #TODO LIST
+\*------------------------------------*/
+
+.task-list__todo {
+    grid-gap: 1rem;
+    &::before {
+        content: 'To-do';
+    }
+    .task-todo {
+        @include box-main;
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1.2rem;
+        align-items: center;
+        max-width: 100%;
+        animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        padding: 1rem 1.1rem;
+        &.editing--active {
+            grid-template-columns: 1fr 90px;
+            .task-todo__check {
+                display: none;
+            }
+        }
+       
+        input {
+            border-radius: 0;
+            box-shadow: none;
+            border-bottom: 2px solid var(--color-border-basic);
+            padding: 0 0 0.3rem 0.5rem;
+            order: -1;
+            height: 45px;
+            grid-column: 1 / -1;
+            color: var(--color-text);
+            &[readonly] {
+                border-bottom: 2px solid var(--color-border-basic);
+                cursor: auto;
+            }
+            @media only screen and (min-width:600px) {
+                grid-column: auto;
+                order: initial;
+                height: auto;
+            }
+            @media only screen and (min-width:1024px) {
+                padding: 0 0 0.5rem 0.5rem;
+            }
+        }
+
+        .task-todo__check {
+            border-radius: 50%;
+            @include border-basic;
+            width: 42px;
+            height: 42px;
+            cursor: pointer;
+            @include transition;
+            position: relative;
+            &.disable {
+                display: none;
+            }
+            &::before {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                border-radius: inherit;
+                mask-repeat: no-repeat;
+                mask-position: center;
+                mask-size: 39%;
+                background-color: #fff;
+                transition: inherit;
+                mask-image: url(../images/done.svg);
+                opacity: 0;
+                @include transition;
+                transform: scale(0.5);
+            }
+            &:hover {
+                background: var(--color-text);
+                box-shadow: inset 0 0 0 2px var(--color-text);
+                &::before {
+                    background: var(--color-primary);
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        }
+        @media only screen and (min-width:600px) {
+            padding: 1rem 1.4rem;
+            height: 90px;
+            grid-template-columns: 44px 1fr 90px;
+        }
+        @media only screen and (min-width:1024px) {
+            grid-gap: 1.8rem;
+        }
+    }
+
+    .task-todo--edit-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
+        padding-left: 10px;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .task-todo__edit,
+    .task-todo__delete {
+        height: 35px;
+        border-radius: 0;
+        position: relative;
+        @include transition;
+       
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            background-color: var(--color-text);
+            transition: inherit;
+        }
+    }
+
+    .task-todo__edit {
+        background: #414a61;
+        cursor: pointer;
+        &::before{
+            background-color: #fff;
+        }
+        &.task-todo__edit--active,
+        &:hover {
+            background-color: var(--color-text);
+            &::before{
+                background: #fff;
+            }
+        }
+        &::before {
+            mask-image: url(../images/edit.svg);
+            mask-size: 20px;
+        }
+    }
+    .task-todo__delete {
+        cursor: pointer;
+        &:hover {
+            background-color: var(--color-text);
+            &::before {
+                transform: scale(0.85);
+                background-color: var(--color-primary);
+            }
+        }
+        &::before {
+            mask-image: url(../images/delete.svg);
+        }
+    }
+}
+
+
+
+/*------------------------------------*\
+  #DONE LIST
+\*------------------------------------*/
+
+.task-list__done {
+    grid-gap: 0.5rem;
+    &::before {
+        content: 'Done';
+        margin-bottom: 1rem;
+    }
+    p {
+        margin: 0;
+        position: relative;
+        padding-left: 2rem;
+        align-self: flex-start;
+        color: var(--color-text);
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #2f3a54;
+        }
+    }
+}

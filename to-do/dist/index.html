@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=fallback" rel="stylesheet">
+    <link rel="shortcut icon" href="/assets/fav-CljvhlfM.jpg" type="image/x-icon">
+
+    <script type="module" crossorigin src="/assets/index-CJayixF1.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CYH1k1wv.css">
+</head>
+
+<header class="layout-container flex flex--between">
+    <section class="header__user flex grid--gap-large">
+        <a class="userSignIn" href="">Sign in</a>
+        <a class="userSignUp" href="">Sign up</a>
+        <div class="header__user--options">
+            <ul>
+                <li>
+                    <a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="33px" viewBox="0 0 24 24" width="35px" fill="#FFFFFF"><g><path d="M0,0h24v24H0V0z" fill="none"/></g><g><g><circle cx="10" cy="8" r="4"/><path d="M10.67,13.02C10.45,13.01,10.23,13,10,13c-2.42,0-4.68,0.67-6.61,1.82C2.51,15.34,2,16.32,2,17.35V20h9.26 C10.47,18.87,10,17.49,10,16C10,14.93,10.25,13.93,10.67,13.02z"/><path d="M20.75,16c0-0.22-0.03-0.42-0.06-0.63l1.14-1.01l-1-1.73l-1.45,0.49c-0.32-0.27-0.68-0.48-1.08-0.63L18,11h-2l-0.3,1.49 c-0.4,0.15-0.76,0.36-1.08,0.63l-1.45-0.49l-1,1.73l1.14,1.01c-0.03,0.21-0.06,0.41-0.06,0.63s0.03,0.42,0.06,0.63l-1.14,1.01 l1,1.73l1.45-0.49c0.32,0.27,0.68,0.48,1.08,0.63L16,21h2l0.3-1.49c0.4-0.15,0.76-0.36,1.08-0.63l1.45,0.49l1-1.73l-1.14-1.01 C20.72,16.42,20.75,16.22,20.75,16z M17,18c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S18.1,18,17,18z"/></g></g></svg>
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 0 24 24" width="33px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                        Log out
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="header__tools flex flex--end grid--gap-large">
+        <a href="https://github.com/Geeorges/to-do" target="_blank" data-title="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="35" height="35"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="#fff"/></svg>
+        </a>
+        <a href="#" id="themeChange" data-title="Dark mode">
+            <span>
+                <svg class="icon-light" xmlns="http://www.w3.org/2000/svg" height="38" viewBox="0 -960 960 960" width="38" fill="#FFFFFF"><path d="M480-353.85q52.26 0 89.21-36.94 36.94-36.95 36.94-89.21 0-52.26-36.94-89.21-36.95-36.94-89.21-36.94-52.26 0-89.21 36.94-36.94 36.95-36.94 89.21 0 52.26 36.94 89.21 36.95 36.94 89.21 36.94Zm0 33.85q-66.85 0-113.42-46.58Q320-413.15 320-480t46.58-113.42Q413.15-640 480-640t113.42 46.58Q640-546.85 640-480t-46.58 113.42Q546.85-320 480-320ZM200-463.08H60v-33.84h140v33.84Zm700 0H760v-33.84h140v33.84ZM463.08-760v-140h33.84v140h-33.84Zm0 700v-140h33.84v140h-33.84ZM271.79-666.1l-86.23-83.93 23.57-25.41 84.46 85.39-21.8 23.95Zm479.24 481.38-84.85-85.46 22.69-23.87 85.57 84.08-23.41 25.25Zm-85.08-504.15 84.08-85.57 25.41 23.41-85.23 84.77-24.26-22.61ZM184.72-209.13l85.31-84.84 22.48 22.33-83.3 86.85-24.49-24.34ZM480-480Z"/></svg>
+                <svg class="icon-dark" xmlns="http://www.w3.org/2000/svg" height="42px" viewBox="0 -960 960 960" width="42px" fill="#FFFFFF"><path d="M482.31-160q-133.34 0-226.67-93.33-93.33-93.34-93.33-226.67 0-121.54 79.23-210.77t196.15-105.38q1.28 0 2.94.15 1.65.15 5.32-.12-18.95 29.27-29.3 63.93-10.34 34.65-10.34 72.19 0 106.67 74.66 181.33Q555.64-404 662.31-404q37.1 0 71.97-9.86t63.31-27.83q-.21 2.84-.05 4.01.15 1.17.15 2.3-15.38 116.92-104.61 196.15T482.31-160Zm0-33.85q94.31 0 167.79-54.5 73.49-54.5 101.59-136.03-21.28 6.94-43.98 10.58-22.7 3.65-45.4 3.65-120.45 0-205.15-84.71-84.7-84.7-84.7-205.14 0-21.64 3.57-43.82 3.56-22.18 11.33-46.54-84.15 30.21-137.68 104.29-53.53 74.08-53.53 166.07 0 119.03 83.57 202.59 83.56 83.56 202.59 83.56Zm-8.05-278.25Z"/></svg>
+            </span>
+        </a>
+    </section>
+</header>
+
+<body>
+    <section class="content layout-container">
+        <section class="content__todo-list">
+            <form id="todoForm" action="" method="post" class="new-task">
+                <input id="newTask" type="text" name="newTask" class="new-task__input" placeholder="Add new task" required autocomplete="off">
+                <button id="todoAdd" class="new-task__add" data-title="Add new task" type="submit">Add</button>
+            </form>
+            <form id="todoList" action="" method="post" class="task-list task-list__todo flex flex--column"></form>
+            <div id="doneList" class="task-list task-list__done flex flex--column"></div>
+        </section>
+        <section class="content__settings">
+            <h2>Hello</h2>
+            <ul>
+                <li><a href="#">change password</a></li>
+                <li><a href="#">delete account</a></li>
+            </ul>
+            <p>
+                Account created
+            </p>
+            
+        </section>
+    </section>
+
+    <section class="auth-popup auth-popup--sign-in" id="logInPopup">
+        <div class="layout-container">
+            <a class="auth__close" id="loginPopupClose" href="#">X</a>
+            <div class="grid auth__inner">
+                <form action="" method="post">
+                    <h3>Sign in</h3>
+                    <label for="loginEmail" class="auth__label--email">
+                        <span>E-mail</span>
+                        <input placeholder="E-mail" type="email" autocomplete="e-mail" name="email" id="loginEmail" required>
+                    </label>
+                    <label for="loginPass" class="auth__label--password">
+                        <span>Password</span>
+                        <input placeholder="Password" type="password" autocomplete="current-password" name="password" id="loginPass" required>
+                    </label>
+                    <button id="signUpCta" data-title="Log in" type="submit">Sign in</button>
+                </form>
+                <div class="auth__after">
+                    <h2>Hello, Friend!</h2>
+                    <p>Enter your personal details and start <br>journey with us</p>
+                    <a class="userSignUp" href="">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="auth-popup auth-popup--sign-up" id="signInPopup">
+        <div class="layout-container">
+            <a class="auth__close" id="signInPopupClose" href="#">X</a>
+            <div class="grid auth__inner">
+                <div class="auth__after">
+                    <h2>Welcome back!</h2>
+                    <p>To keep connected with us please login <br>with your personal info</p>
+                    <a class="userSignIn" href="">Sign in</a>
+                </div>
+                <form action="" method="post" autocomplete="off">
+                    <h3>Create account</h3>
+                    <label for="signInUser" class="auth__label--name">
+                        <span>Name</span>
+                        <input type="text" placeholder="Name" name="new-username" autocomplete="new-username" id="signInUser">
+                    </label>
+                    <label for="signInEmail" class="auth__label--email">
+                        <span>E-mail</span>
+                        <input type="email" placeholder="E-mail" autocomplete="e-mail" name="new-email" id="signInEmail">
+                    </label>
+                    <label for="signInPass" class="auth__label--password">
+                        <span>Password</span>
+                        <input type="password" placeholder="Password" autocomplete="off" name="new-password" id="signInPass">
+                    </label>
+                    <button id="signInCta" data-title="Sign in" type="submit">Sign up</button>
+                </form>
+                <div id="passwordShort" class="alert">
+                    <div class="layout-container">
+                        <div class="login-warning__content">
+                            <small>Your password must be at least 8 characters long.</small>
+                        </div>
+                    </div>
+                </div>
+                <div id="passwordSimple" class="alert">
+                    <div class="layout-container">
+                        <div class="login-warning__content">
+                            <small>Your password is simple, try to create strong password.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="login-warning alert">
+        <div class="layout-container">
+            <div class="login-warning__content">
+                <small>Please <a class="userSignIn" href="">Sign in</a> to do changes</small>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+/*tooltip*/
+[data-title] {
+    position: relative;
+}
+@media only screen and (min-width:1024px) {
+    [data-title]::after {
+        content: attr(data-title);
+        visibility: hidden;
+        background-color: #505a73;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        position: absolute;
+        opacity: 0;
+        transition: opacity 0.3s;
+        white-space: nowrap;
+        z-index: 1;
+        padding: 3px 7px;
+        bottom: 120%;
+        left: auto;
+        right: 0;
+        font-size: 0.7rem;
+        text-indent: 0;
+        padding: 5px 10px;
+        bottom: 125%;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        font-size: 0.9rem;
+    }
+}
+[data-title]:hover::after {
+    visibility: visible;
+    opacity: 1;
+}
+/* animation */
+@-webkit-keyframes scale-in-center {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+@keyframes scale-in-center {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.alert{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgb(33 40 52 / 78%);
+    padding-top: 5rem;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none; 
+    
+    &.active{
+        z-index: 105;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: all; 
+        .login-warning__content{
+            &::before{
+                transition: width 4.5s ease;
+                width: 100%;
+            }
+        }
+    }
+
+    .layout-container{
+        padding: 0 3rem;
+    }
+    .login-warning__content{
+        position: relative;
+        background: var(--color-primary);
+        padding: 3rem 3rem 3.25rem;
+        text-align: center;
+        border-top: 10px solid var(--color-text);
+        &::before{
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: -10px;
+            height: 10px;
+            background: var(--color-primary);
+            width: 0%;
+        }
+    }
+    small{
+        margin: 0;
+        font-size: 1.2em;
+        a{
+            color: var(--color-text);
+            &:hover{
+                text-decoration: none;
+            }
+        }
+    }
+}

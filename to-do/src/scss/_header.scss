@@ -1,0 +1,97 @@
+@use '../scss/mixins' as *;     // Imports mixins
+
+header{
+    padding: 1.9rem 0 0;
+    @media only screen and (min-width:1024px) {
+        padding: 3rem 0 0;
+    }
+}
+
+.header__inner {
+}
+
+
+.header__user{
+    a{
+        color: var(--color-text);
+        &:hover{
+            text-decoration: none;
+        }
+        &:has(svg){
+            display: flex;
+            align-items: center;
+            grid-gap: 0.5rem;
+      
+            svg{
+                fill: var(--color-text);
+            }
+        }
+        &:hover{
+        }
+    }
+}
+
+
+.header__tools{
+    a{
+        &:has(svg){
+            display: flex;
+            align-items: center
+        }
+        svg{
+            fill: var(--color-text);
+            path{
+                fill: var(--color-text);
+            }
+        }
+    }
+}
+
+#ctaReset {
+    svg {
+        @include transition;
+    }
+    &:hover {
+        svg {
+            transform: rotate(-90deg);
+        }
+    }
+}
+
+
+.theme-light{
+    #themeChange{
+        .icon-dark{
+            transform: translateY(50%);
+            bottom: 50%;
+        }
+    }
+}
+.theme-dark{
+    #themeChange{
+        .icon-light{
+            transform: translateY(-50%);
+            top: 50%;
+        }
+    }
+}
+
+#themeChange{
+    &>span{
+        position: relative;
+        width: 45px;
+        height: 100%;
+        overflow: hidden;
+    }
+    .icon-light{
+        top: -2rem;
+    }
+    .icon-dark{
+        bottom: -2rem;
+    }
+    svg{
+        position: absolute;
+        @include transition;
+       
+    }
+}
