@@ -1,7 +1,11 @@
 import { Client, Databases, ID, Messaging, Query } from 'appwrite';
+import { createListItem as createItemList, createDoneItem as createItemDone, loginCheck, loginError, shortPassword, simplePassword} from './functions.js';
+import { checkIfEmpty} from './main.js';
 
 
+// --------
 // INITIALIZE DB
+// --------
 
 const client = new Client()
     .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,9 +14,9 @@ const client = new Client()
 const databases = new Databases(client);
 
 
-//
-// FUNCTIONS
-
+// --------
+// FETCH FUNCTIONS
+// --------
 
 async function fetchTodoDocuments() {
     try {
@@ -29,7 +33,7 @@ async function fetchTodoDocuments() {
             let taskName = result.Task;
             let taskId = result.$id;
             let taskUpdated = result.$updatedAt;
-            createListItem(taskName, taskId, taskUpdated);
+            createItemList(taskName, taskId, taskUpdated);
         });
         removeListItem();
         completeListItem();
@@ -54,7 +58,7 @@ async function fetchDoneDocuments() {
             let taskName = result.Task;
             let taskId = result.$id;
             let taskUpdated = result.$updatedAt;
-            createDoneItem(taskName, taskId, taskUpdated);
+            createItemDone(taskName, taskId, taskUpdated);
         });
 
         checkIfEmpty();
@@ -64,7 +68,12 @@ async function fetchDoneDocuments() {
     }
 }
 
-async function addDocuments(inputText) {
+
+// --------
+// functions - ADD / EDIT / DONE / DELETE
+// --------
+
+const addDocuments = async function addDocuments(inputText) {
     try {
         const session = await loginCheck(); // Await inside async callback
         if (session) {
@@ -84,7 +93,7 @@ async function addDocuments(inputText) {
         
                 promise.then(function (response) {
                     console.log('Document created successfully:', response);
-                    createListItem(response.Task, response.$id);
+                    createItemList(response.Task, response.$id);
                     removeListItem();
                     completeListItem();
                     editListItem();
@@ -105,35 +114,7 @@ async function addDocuments(inputText) {
     }
 }
 
-async function markAsDone(contentId) {
-    try {
-
-        // Create a new document in the specified collection
-        const promise = databases.updateDocument(
-            '673e5848002973075c76', // databaseId
-            '673e5a6200247fcdc7b5', // collectionId
-            contentId,
-            {
-                Done: true // Document fields (you can add more fields here)
-            }
-        );
-
-        promise.then(function (response) {
-            console.log('Document created successfully:', response);
-            createDoneItem(response.Task, response.$id, response.$updatedAt);
-            checkIfEmpty();
-            removeListItem();
-
-        }, function (error) {
-            console.error('Error in marking element as done:', error);
-        });
-
-    } catch (error) {
-        console.error("Error in markAsDone function:", error);
-    }
-}
-
-async function editTask(contentId, contentValue) {
+const editTask = async function editTask(contentId, contentValue) {
     try {
       
         // Create a new document in the specified collection
@@ -158,14 +139,35 @@ async function editTask(contentId, contentValue) {
     }
 }
 
+const markAsDone = async function markAsDone(contentId) {
+    try {
 
-//
-// MAIN CODE 
+        // Create a new document in the specified collection
+        const promise = databases.updateDocument(
+            '673e5848002973075c76', // databaseId
+            '673e5a6200247fcdc7b5', // collectionId
+            contentId,
+            {
+                Done: true // Document fields (you can add more fields here)
+            }
+        );
 
-fetchTodoDocuments();
-fetchDoneDocuments();
+        promise.then(function (response) {
+            console.log('Document created successfully:', response);
+            createItemDone(response.Task, response.$id, response.$updatedAt);
+            checkIfEmpty();
+            removeListItem();
 
-async function deleteElement(iDToDelete){
+        }, function (error) {
+            console.error('Error in marking element as done:', error);
+        });
+
+    } catch (error) {
+        console.error("Error in markAsDone function:", error);
+    }
+}
+
+const deleteElement = async function deleteElement(iDToDelete){
     try{
         const result = await databases.deleteDocument(
             '673e5848002973075c76', // databaseId
@@ -177,6 +179,16 @@ async function deleteElement(iDToDelete){
     }
 }
 
+
+// --------
+// MAIN CODE
+// --------
+
+fetchTodoDocuments();
+fetchDoneDocuments();
+
+
+// remove
 function removeListItem() {
     let inputWrapper = document.querySelectorAll(".task-todo")
     
@@ -230,9 +242,6 @@ todoForm.addEventListener('submit', function (event) {
     }
 });
 
-
-
-
 // Complete list item
 async function completeListItem() {
     document.querySelectorAll(".task-todo").forEach(wrapper => {
@@ -271,11 +280,6 @@ async function completeListItem() {
         });
     });
 }
-
-
-
-
-
 
 // Edit to-do list item
 async function editListItem() {

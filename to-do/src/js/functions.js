@@ -1,17 +1,7 @@
-// Show .task-list if not empty
-function checkIfEmpty(){
-    let todoBox = document.querySelectorAll(".task-list");
-    todoBox.forEach(box => {
-        if (box.children.length > 0) {
-            box.classList.add("active");
-        } else {
-            box.classList.remove("active");
-        }
-    });
-}
+import { checkIfEmpty} from './main.js';
 
 // Create new to-do item
-async function createListItem(taskName, taskID) {
+export const createListItem = function createListItem(taskName, taskID) {
     // Helper function to create elements with attributes
     function createElement(tag, classes = [], attributes = {}) {
         let element = document.createElement(tag);
@@ -40,7 +30,7 @@ async function createListItem(taskName, taskID) {
 }
 
 // Create new done item
-function createDoneItem(doneItem, itemId, itemDate) {
+export const createDoneItem = function createDoneItem(doneItem, itemId, itemDate) {
     let date = new Date(itemDate);
     const readableDate = `Fineshed at ${date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' })} at ${date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })}`;
     let itemDone = document.createElement("p");
@@ -49,7 +39,7 @@ function createDoneItem(doneItem, itemId, itemDate) {
     doneList.prepend(itemDone); // append new item into done-list
 }
 
-function loginCheck(){
+export function loginCheck(){
     let session = document.querySelector("body.session-active");
     if(session){
         return true;
@@ -84,18 +74,14 @@ function showMessage(selector, duration = 4500) {
     message.addEventListener('click', handleClick);
 }
 
-function loginError(){
+export function loginError(){
     showMessage('.login-warning');
 }
 
-function shortPassword() {
+export function shortPassword() {
     showMessage('#passwordShort');
 }
 
-function simplePassword() {
+export function simplePassword() {
     showMessage('#passwordSimple');
 }
-
-// Check if user is logged in
-
-

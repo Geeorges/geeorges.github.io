@@ -45,9 +45,7 @@ function applyThemeColors(theme) {
 
 
 // Handle theme change
-
 let themeChange = document.querySelector("#themeChange");
-
 function changeTheme() {
     if (theme.includes(light)) {
         // Switch to dark theme
